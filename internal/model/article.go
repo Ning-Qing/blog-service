@@ -1,8 +1,9 @@
 package model
 
 import (
-	"github.com/go-programming-tour-book/blog-service/pkg/app"
-	"github.com/jinzhu/gorm"
+	"example/pkg/app"
+
+	"gorm.io/gorm"
 )
 
 type Article struct {
@@ -99,7 +100,7 @@ func (a Article) ListByTagID(db *gorm.DB, tagID uint32, pageOffset, pageSize int
 }
 
 func (a Article) CountByTagID(db *gorm.DB, tagID uint32) (int, error) {
-	var count int
+	var count int64
 	err := db.Table(ArticleTag{}.TableName()+" AS at").
 		Joins("LEFT JOIN `"+Tag{}.TableName()+"` AS t ON at.tag_id = t.id").
 		Joins("LEFT JOIN `"+Article{}.TableName()+"` AS ar ON at.article_id = ar.id").
@@ -109,5 +110,5 @@ func (a Article) CountByTagID(db *gorm.DB, tagID uint32) (int, error) {
 		return 0, err
 	}
 
-	return count, nil
+	return int(count), nil
 }

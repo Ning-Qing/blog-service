@@ -12,16 +12,14 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/go-programming-tour-book/blog-service/pkg/tracer"
+	"example/global"
+	"example/internal/model"
+	"example/internal/routers"
+	"example/pkg/logger"
+	"example/pkg/setting"
+	"example/pkg/validator"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
-	"github.com/go-programming-tour-book/blog-service/global"
-	"github.com/go-programming-tour-book/blog-service/internal/model"
-	"github.com/go-programming-tour-book/blog-service/internal/routers"
-	"github.com/go-programming-tour-book/blog-service/pkg/logger"
-	"github.com/go-programming-tour-book/blog-service/pkg/setting"
-	"github.com/go-programming-tour-book/blog-service/pkg/validator"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -52,10 +50,6 @@ func init() {
 	err = setupValidator()
 	if err != nil {
 		log.Fatalf("init.setupValidator err: %v", err)
-	}
-	err = setupTracer()
-	if err != nil {
-		log.Fatalf("init.setupTracer err: %v", err)
 	}
 }
 
@@ -169,16 +163,6 @@ func setupDBEngine() error {
 func setupValidator() error {
 	global.Validator = validator.NewCustomValidator()
 	global.Validator.Engine()
-	binding.Validator = global.Validator
 
-	return nil
-}
-
-func setupTracer() error {
-	jaegerTracer, _, err := tracer.NewJaegerTracer("blog-service", "127.0.0.1:6831")
-	if err != nil {
-		return err
-	}
-	global.Tracer = jaegerTracer
 	return nil
 }

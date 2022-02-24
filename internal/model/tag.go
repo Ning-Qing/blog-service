@@ -1,8 +1,9 @@
 package model
 
 import (
-	"github.com/go-programming-tour-book/blog-service/pkg/app"
-	"github.com/jinzhu/gorm"
+	"example/pkg/app"
+
+	"gorm.io/gorm"
 )
 
 type Tag struct {
@@ -21,7 +22,7 @@ type TagSwagger struct {
 }
 
 func (t Tag) Count(db *gorm.DB) (int, error) {
-	var count int
+	var count int64
 	if t.Name != "" {
 		db = db.Where("name = ?", t.Name)
 	}
@@ -30,7 +31,7 @@ func (t Tag) Count(db *gorm.DB) (int, error) {
 		return 0, err
 	}
 
-	return count, nil
+	return int(count), nil
 }
 
 func (t Tag) List(db *gorm.DB, pageOffset, pageSize int) ([]*Tag, error) {

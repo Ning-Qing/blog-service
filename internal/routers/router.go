@@ -4,15 +4,15 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/go-programming-tour-book/blog-service/pkg/limiter"
+	"example/pkg/limiter"
 
-	"github.com/go-programming-tour-book/blog-service/global"
+	"example/global"
 
+	_ "example/docs"
+	"example/internal/middleware"
+	"example/internal/routers/api"
+	"example/internal/routers/api/v1"
 	"github.com/gin-gonic/gin"
-	_ "github.com/go-programming-tour-book/blog-service/docs"
-	"github.com/go-programming-tour-book/blog-service/internal/middleware"
-	"github.com/go-programming-tour-book/blog-service/internal/routers/api"
-	"github.com/go-programming-tour-book/blog-service/internal/routers/api/v1"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
@@ -36,7 +36,6 @@ func NewRouter() *gin.Engine {
 		r.Use(middleware.Recovery())
 	}
 
-	r.Use(middleware.Tracing())
 	r.Use(middleware.RateLimiter(methodLimiters))
 	r.Use(middleware.ContextTimeout(global.AppSetting.DefaultContextTimeout))
 	r.Use(middleware.Translations())

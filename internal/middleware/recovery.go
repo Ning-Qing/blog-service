@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-programming-tour-book/blog-service/pkg/email"
+	"example/pkg/email"
 
-	"github.com/go-programming-tour-book/blog-service/pkg/app"
-	"github.com/go-programming-tour-book/blog-service/pkg/errcode"
+	"example/pkg/app"
+	"example/pkg/errcode"
+
+	"example/global"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-programming-tour-book/blog-service/global"
 )
 
 func Recovery() gin.HandlerFunc {

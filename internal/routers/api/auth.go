@@ -1,11 +1,12 @@
 package api
 
 import (
+	"example/global"
+	"example/internal/service"
+	"example/pkg/app"
+	"example/pkg/errcode"
+
 	"github.com/gin-gonic/gin"
-	"github.com/go-programming-tour-book/blog-service/global"
-	"github.com/go-programming-tour-book/blog-service/internal/service"
-	"github.com/go-programming-tour-book/blog-service/pkg/app"
-	"github.com/go-programming-tour-book/blog-service/pkg/errcode"
 )
 
 func GetAuth(c *gin.Context) {
