@@ -2,9 +2,8 @@
 run:
 	go run main.go
 
-
 .PHONY: build
 build:
 	swag init
-	go build -o build/ipfs-go main.go
+	go build -o build/example main.go
 	

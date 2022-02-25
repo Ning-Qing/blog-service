@@ -11,7 +11,9 @@ import (
 	_ "example/docs"
 	"example/internal/middleware"
 	"example/internal/routers/api"
-	"example/internal/routers/api/v1"
+	v1 "example/internal/routers/api/v1"
+
+	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -28,6 +30,7 @@ var methodLimiters = limiter.NewMethodLimiter().AddBuckets(
 
 func NewRouter() *gin.Engine {
 	r := gin.New()
+	pprof.Register(r)
 	if global.ServerSetting.RunMode == "debug" {
 		r.Use(gin.Logger())
 		r.Use(gin.Recovery())
