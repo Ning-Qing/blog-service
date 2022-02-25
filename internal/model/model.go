@@ -3,10 +3,12 @@ package model
 import (
 	"fmt"
 
+	"example/global"
 	"example/pkg/setting"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 const (
@@ -34,8 +36,14 @@ func NewDBEngine(databaseSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 		databaseSetting.Charset,
 		databaseSetting.ParseTime,
 	)))
+
 	if err != nil {
 		return nil, err
+	}
+
+	if global.ServerSetting.RunMode == "debug" {
+		db.Config = &gorm.Config{
+			Logger: logger.Default.LogMode(logger.Info)}
 	}
 
 	return db, nil
