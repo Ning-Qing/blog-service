@@ -1,3 +1,7 @@
+.PHONY: init
+init:
+	go get -u github.com/swaggo/swag/cmd/swag
+
 .PHONY: run
 run:
 	go run main.go
